@@ -1,17 +1,23 @@
 import express from 'express'
+import bodyParser from 'body-parser'
 import {createTodo} from './service'
 
 const app = express()
 const port = 3000
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
 // Endpoint to create Todo
-app.post('/api/create', (req, res) => {
-    const {body} = req
-    const todo = createTodo(body)
+app.post('/api/create', async (req, res) => {
+    const todo = await createTodo(req.body)
+    console.log(todo)
+    res.send('Todo item created')
+    
 })
 
 app.listen(port, () => {
