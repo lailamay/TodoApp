@@ -9,7 +9,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello World')
 })
 
 // Endpoint to create Todo
@@ -18,6 +18,12 @@ app.post('/api/create', async (req, res) => {
     console.log(todo)
     res.send('Todo item created')
     
+})
+
+// Endpoint to delete Todo
+app.get('/api/delete', async (req, res) => {
+  console.log(req.query)
+  res.send('Todo deleted')
 })
 
 app.listen(port, () => {

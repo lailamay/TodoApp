@@ -20,3 +20,11 @@ export async function createTodo(body: any) {
     }
     
 }
+
+export async function deleteTodo(query: any) {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
