@@ -6,25 +6,18 @@ const prisma =  new PrismaClient()
 
 export async function createTodo(body: any) { 
     //TODO: Add creation
-    try {
-        const todo = await prisma.todo.create({
+        return await prisma.todo.create({
             data: {
                 note: body.note
             }
         })
-        
-        return todo
-
-    } catch (error) {
-        console.log(error)
-    }
-    
 }
 
-export async function deleteTodo(query: any) {
-    try {
-        
-    } catch (error) {
-        
-    }
+export async function deleteTodo(todoId: any) {
+        return await prisma.todo.delete({
+            where: {
+                id: todoId
+            }
+        })
 }
+
