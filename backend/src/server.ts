@@ -1,6 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import {createTodo} from './service'
+import {createTodo, deleteTodo} from './service'
+import { Prisma } from '@prisma/client'
 
 const app = express()
 const port = 3000
@@ -14,16 +15,31 @@ app.get('/', (req, res) => {
 
 // Endpoint to create Todo
 app.post('/api/create', async (req, res) => {
+  try {
     const todo = await createTodo(req.body)
     console.log(todo)
     res.send('Todo item created')
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      console.log(error)
+      res.status(400).send(error.message)
+    }
+  }
+    
     
 })
 
 // Endpoint to delete Todo
 app.get('/api/delete', async (req, res) => {
-  console.log(req.query)
+  try {
+  const todo = await deleteTodo(req.query.id)
   res.send('Todo deleted')
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      console.log(error)
+      res.status(400).send(error.message)
+    }
+  }
 })
 
 app.listen(port, () => {
