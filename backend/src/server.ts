@@ -18,7 +18,7 @@ app.post('/api/create', async (req, res) => {
   try {
     const todo = await createTodo(req.body)
     console.log(todo)
-    res.send('Todo item created')
+    res.send(todo)
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       console.log(error)
