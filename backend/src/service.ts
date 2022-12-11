@@ -13,6 +13,10 @@ export async function createTodo(body: any) {
         })
 }
 
+export async function readTodo() {
+    return await prisma.todo.findMany()
+}
+
 export async function deleteTodo(todoId: any) {
         return await prisma.todo.delete({
             where: {
