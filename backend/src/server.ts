@@ -1,6 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import {createTodo, readTodo, deleteTodo} from './service'
+import {createTodo, readTodo, deleteTodo, updateTodo} from './service'
 import { Prisma } from '@prisma/client'
 
 const app = express()
@@ -34,6 +34,19 @@ app.get('/api/read', async (req, res) => {
   try {
     const todos = await readTodo()
     res.send(todos)
+  }catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      console.log(error)
+      res.status(400).send(error.message)
+    }
+  }
+})
+
+app.post('/api/update', async (req, res) => {
+  try {
+    const body = req.body as {id: string, updatedNote: string}
+    const todo = await updateTodo(body.id, body.updatedNote)
+    res.send(todo)
   }catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       console.log(error)

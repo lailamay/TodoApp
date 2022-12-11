@@ -17,6 +17,18 @@ export async function readTodo() {
     return await prisma.todo.findMany()
 }
 
+export async function updateTodo(todoId: any, updateTodo: any) {
+    const result = await prisma.todo.update({
+        where: {
+            id: todoId
+        },
+        data: {
+            note: updateTodo
+          },
+    })
+    return result
+}
+
 export async function deleteTodo(todoId: any) {
         return await prisma.todo.delete({
             where: {
